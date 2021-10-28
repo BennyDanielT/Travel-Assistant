@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -19,7 +20,7 @@ public class MainUI
         String planTripCommand = "plan";
 
         System.out.println("Commands available:");
-        System.out.println("  " + addCityCommand + " <City> <Test Required?> <Time to Test> <Nighty Hotel Cost>");
+        System.out.println("  " + addCityCommand + " <City> <Test Required?> <Time to Test> <Nightly Hotel Cost>");
         System.out.println("  " + addFlightCommand + "<Start City> <Destination City> <Flight Time> <Flight Cost>");
         System.out.println("  " + addTrainCommand + "<Start City> <Destination City> <Train Time> <Train Cost>");
         System.out.println("  " + planTripCommand + "<Start City> <Destination City> <Vaccinated?> <Cost Importance> <Time Importance> <Hop Importance>");
@@ -124,7 +125,7 @@ public class MainUI
 
                 try
                 {
-                    ArrayList<String> itinerary = TA.planTrip(start_city, dest_city, vacc_status, cost_imp, time_imp,hop_imp);
+                    List<String> itinerary = TA.planTrip(start_city, dest_city, vacc_status, cost_imp, time_imp,hop_imp);
 
                     for(String str:itinerary) //Print the Mode of Travel and City visited in the itinerary
                     {
