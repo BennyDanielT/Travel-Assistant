@@ -17,4 +17,19 @@ public class City
     {
         return this.cityName;
     }
+
+    public boolean getTestRequired()
+    {
+        return this.testRequired;
+    }
+
+    public int getTimeToTest()
+    {
+        return this.timeToTest;
+    }
+
+    public int getHotelCost()
+    {
+        return this.nightlyHotelCost;
+    }
 }
