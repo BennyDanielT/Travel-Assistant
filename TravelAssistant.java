@@ -237,7 +237,7 @@ public class TravelAssistant
                 boolean vacc_status = isVaccinated; /*Store the Vaccination status
          so that if an unvaccinated traveller gets tested in a City, we can change the status to "Vaccinated"*/
                 City nc = new City();
-                //City neighbour_city=cy; //Retrieve a neighbour city that's CONNECTED to the processed city
+                //Retrieve a neighbour city that's CONNECTED to the processed city
                 for (City C : Cities) {
                     if (Objects.equals(C.getCity(), neighbour_city)) {
                         nc = C;
@@ -295,7 +295,7 @@ public class TravelAssistant
                         rel_cost.put(neighbour_city,updated_cost);
                         nc.setCostFromSource(updated_cost);
                         travel_path.put(neighbour_city, optimal_hop);
-                        if(!vacc_status && vax_flag)
+                        if(!vacc_status && vax_flag) //If traveler is unvaccinated but can be tested in this City set the vaccination status as True
                         {
                             vacc_status=true;
                         }

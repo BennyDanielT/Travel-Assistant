@@ -1,11 +1,9 @@
-import java.util.Comparator;
-
-public class City
+public class City //Class to store the attributes of a City
 {
-    private String cityName;
-    private boolean testRequired;
-    private int timeToTest;
-    private int nightlyHotelCost;
+    private String cityName; //City name
+    private boolean testRequired; //States if a test is Required for Unvaccinated individuals to enter the city
+    private int timeToTest; //Time to Take a test
+    private int nightlyHotelCost; //Hotel Cost for 1 night
     private int cost_from_source; //Cost to Travel from source to this City
 
 
@@ -18,10 +16,8 @@ public class City
         this.cost_from_source=Integer.MAX_VALUE;
     }
 
-    public City() {
-
-    }
-
+    public City() {} //Constructor
+    //Get Methods to return attributes of the class and a set method to update the distance of this city from the source city
     public void setCostFromSource(int cost)
     {
         this.cost_from_source=cost;

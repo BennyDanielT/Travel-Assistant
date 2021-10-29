@@ -1,14 +1,14 @@
-public class Hop
+public class Hop //Class to Record each travel hop
 {
-    private String start;
-    private String destination;
-    private float relative_cost;
-    private int time;
-    private int cost;
-    private String mode;
+    private String start; //Start city
+    private String destination;//Destination city
+    private float relative_cost; //Relative cost of visiting city from the source
+    private int time; //Time to travel
+    private int cost; //Cost of travel
+    private String mode; //Mode of travel (Fly / Train)
 
 
-    public Hop(String start, String destination, int time, int cost, String mode)
+    public Hop(String start, String destination, int time, int cost, String mode) //Constructor
     {
         this.start = start;
         this.destination = destination;
@@ -17,7 +17,7 @@ public class Hop
         this.relative_cost = 0;
         this.mode=mode;
     }
-
+//Get Methods to return attributes of the class
     public String getStart()
     {
         return start;
