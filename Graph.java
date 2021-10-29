@@ -3,31 +3,18 @@ import java.util.*;
 public class Graph
 {
   HashSet<City> vertices;
-  private List<Hop> hops;
+  Map<String, Set<String>> adjVertices; //Adjacency List to store the edges of Cities which are connected
 
-  Map<City, Set<City>> adjVertices; //adjacency List to store the edges of Cities which are connected
 
-    public Graph()
+  public Graph()
     {
-        vertices = new HashSet<City>();
-        //hops = new ArrayList<Hop>();
-        adjVertices= new HashMap<City,Set<City>>();
-        //visited = new HashSet<String>();
-//        pqueue = new PriorityQueue<City>(V, new City());
+        vertices = new HashSet<City>(); //Set of Cities
+        adjVertices= new HashMap<String,Set<String>>(); //Adjacency List for each City
+
     }
 
     public Set<City> getCities()
     {
       return vertices;
     }
-
-  public List<Hop> getRoutes()
-  {
-    return hops;
-  }
-
-//    public void addEdge(String start,String destination,int time,int cost)
-//    {
-//
-//    }
 }

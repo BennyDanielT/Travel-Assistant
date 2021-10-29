@@ -1,14 +1,14 @@
 public class Hop
 {
-    private City start;
-    private City destination;
+    private String start;
+    private String destination;
     private float relative_cost;
     private int time;
     private int cost;
     private String mode;
 
 
-    public Hop(City start, City destination, int time, int cost, String mode)
+    public Hop(String start, String destination, int time, int cost, String mode)
     {
         this.start = start;
         this.destination = destination;
@@ -18,12 +18,12 @@ public class Hop
         this.mode=mode;
     }
 
-    public City getStart()
+    public String getStart()
     {
         return start;
     }
 
-    public City getDestination()
+    public String getDestination()
     {
         return destination;
     }
@@ -36,6 +36,11 @@ public class Hop
     public int getCost()
     {
         return cost;
+    }
+
+    public String getMode()
+    {
+        return mode;
     }
 
 }
