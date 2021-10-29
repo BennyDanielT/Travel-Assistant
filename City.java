@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class City implements Comparator<City>
+public class City
 {
     private String cityName;
     private boolean testRequired;
@@ -16,6 +16,10 @@ public class City implements Comparator<City>
         this.timeToTest=timeToTest; //Time taken to test (in minutes)
         this.nightlyHotelCost=nightlyHotelCost;
         this.cost_from_source=Integer.MAX_VALUE;
+    }
+
+    public City() {
+
     }
 
     public void setCostFromSource(int cost)
@@ -48,9 +52,9 @@ public class City implements Comparator<City>
         return this.cost_from_source;
     }
 
-    @Override
-    public int compare(City o1, City o2)
-    {
-        return o1.cost_from_source-o2.cost_from_source;
-    }
+//    @Override
+//    public int compare(City o1, City o2)
+//    {
+//        return o1.cost_from_source-o2.cost_from_source;
+//    }
 }

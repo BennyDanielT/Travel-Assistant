@@ -8,7 +8,7 @@ public class TravelAssistant
     private ArrayList<Flight> Flights = new ArrayList<>();
     private ArrayList<Train> Trains = new ArrayList<>();
 
-    private Graph travel_graph=new Graph();
+    private final Graph travel_graph=new Graph();
 
 
     //Method to add a City
@@ -55,7 +55,7 @@ public class TravelAssistant
     {
         for(City c:Cities)
         {
-            if(c.getCity()==cityName)
+            if(Objects.equals(c.getCity(), cityName))
             {
                 return c;
             }
@@ -104,7 +104,7 @@ public class TravelAssistant
 
             for(String city : travel_graph.adjVertices.keySet())
             {
-                if(city==startCity)
+                if(Objects.equals(city, startCity))
                     travel_graph.adjVertices.get(city).add(destinationCity); //Add an edge between start city and destination city in the adjacency list
             }
             return true;
@@ -117,20 +117,6 @@ public class TravelAssistant
         }
 
     }
-
-//    public boolean checkFlights(String startCity, String destinationCity, int flightTime, int flightCost) // Check if a Flight route already exists
-//    {
-//        boolean flight_exists = false;
-//        for (int i = 0; i < Flights.size(); i++)
-//        {
-//            //Check in information entered contradicts existing information
-//            if (Flights.get(i).getStartCity() == startCity && Flights.get(i).getEndCity() == destinationCity && (Flights.get(i).getflightTime()!=flightTime || Flights.get(i).getflightCost()!=flightCost))
-//            {//If the new information contradicts existing information then return false
-//                flight_exists = true;
-//            }
-//        }
-//        return flight_exists;
-//    }
 
     //Add a Train route to the Travel Assistant
     boolean addTrain( String startCity, String destinationCity, int trainTime, int trainCost) throws IllegalArgumentException
@@ -172,7 +158,7 @@ public class TravelAssistant
 
             for(String city : travel_graph.adjVertices.keySet())
             {
-                if(city==startCity)
+                if(Objects.equals(city, startCity))
                     travel_graph.adjVertices.get(city).add(destinationCity); //Add an edge between start city and destination city in the adjacency list
             }
             return true;
@@ -185,20 +171,6 @@ public class TravelAssistant
         }
     }
 
-    private boolean checkTrains(String startCity, String destinationCity, int trainTime, int trainCost)
-    {
-        boolean train_exists = false;
-        for (int i = 0; i < Trains.size(); i++)
-        {
-            //Check in information entered contradicts existing information
-            if (Trains.get(i).getStartCity() == startCity && Trains.get(i).getEndCity() == destinationCity && (Trains.get(i).gettrainTime()!=trainTime || Trains.get(i).gettrainCost()!=trainCost))
-            {
-                train_exists = true;
-            }
-        }
-        return train_exists;
-    }
-
     /*Accepts the user's choice of city for Arrival and Departure and plans a
     trip based on the list of cities that are available under the Travel Assistant
     The assistant considers the following factors:
@@ -207,131 +179,164 @@ public class TravelAssistant
     --Travel Cost
     --Number of Transits */
 
-//    List<String> planTrip ( String startCity, String destinationCity, boolean isVaccinated, int costImportance, int travelTimeImportance, int travelHopImportance ) throws
-//            IllegalArgumentException
-//    {
-//        if(startCity==null || startCity.isEmpty() || !Cities.contains(returnCity(startCity)) || destinationCity==null || destinationCity.isEmpty() || !Cities.contains(returnCity(destinationCity)) || (costImportance<0)|| (travelTimeImportance<0) || (travelHopImportance<0)) //Check for Invalid Input
-//        {
-//            throw new IllegalArgumentException("Invalid parameters are entered for this Trip!");
-//        } //Throw an Exception if any Illegal Arguments are entered
-//
-//        List<String> output=new ArrayList <String>(); //Output List of Strings which contains the Cities visited and the mode of Travel
-//
-//        City start_city=returnCity(startCity);//Retrieve objects from the List of Cities where City Name is a match.
-//        City destination_city=returnCity(destinationCity);
-//
-//        HashSet<City> visited_nodes=new HashSet<City>(); //Initialize a Set of Visited Nodes for Dijkstra's algorithm
-//        PriorityQueue<City> queue = new PriorityQueue<City>(); //Initialize a Priority Queue for Dijkstra's algorithm
-//
-//        HashMap<City, Hop> travel_path = new HashMap<>(); //A Map to store the cost of travel from the source City to every other City in the Travel Assistant
-//        HashMap<City, Integer> travel_hops = new HashMap<>(); //A Map to store the number of Hops from the source City to every other City in the Travel Assistant
-//        //HashMap<City, Integer> rel_cost = new HashMap<>(); //A Map to store the cost of travel from the source City to every other City in the Travel Assistant
-//
-//
-//        boolean vacc_status=isVaccinated; /*Store the Vaccination status
-//         so that if an unvaccinated traveller gets tested in a City, we can change the status to "Vaccinated"*/
-//
-//        for(City c:Cities)
-//        {
-//            //rel_cost.put(c,Integer.MAX_VALUE);
-//            c.setCostFromSource(Integer.MAX_VALUE);/*Assigning the cost of travel to each City as INFINITY.
-//            To simulate infinity, I have assigned the maximum value an integer can take*/
-//        }
-//
-//        //rel_cost.put(start_city,0); //Set the relative cost of visiting a "Start City" as 0.
-//        start_city.setCostFromSource(0);
-//
-//        travel_hops.put(start_city,0); //Set the number of travel_hops to visit a "Start City" as 0.
-//        queue.add(start_city); //Add the City to the Priority queue
-//
-//        while(visited_nodes.size()!=Cities.size()) //Traverse the Graph till all Nodes are visited
-//        {
-//            City nearest_city=queue.remove(); //Retrieve the city that is closest to the current city
-//            visited_nodes.add(nearest_city); //Add it to the list of processed Cities
-//            int updated_cost;
-//
-//            //int j=0;j<travel_graph.adjVertices.get(nearest_city).size();j++
-//            for(String neighbour_city : travel_graph.adjVertices.get(nearest_city)) //For all Cities that are connected to the current City that was processed
-//            {
-//                //City neighbour_city=cy; //Retrieve a neighbour city that's CONNECTED to the processed city
-//
-//                if(!vacc_status && (neighbour_city.getTimeToTest()<0) && (neighbour_city.getTestRequired()==true)) //Unvaccinated & a Test is required but Testing CANNOT be performed in the City
-//                {
-//                    continue;
-//                }
-//
-//                    if(!visited_nodes.contains(neighbour_city)) //Check if the neighbour city has already been processed
-//                {
-//                    travel_hops.put(neighbour_city, travel_hops.get(nearest_city)+1); //#travel_hops(source to current node) = #travel_hops from source to previous node + #travel_hops from previous to current node
-//
-//                    int mode_relative_cost=Integer.MAX_VALUE;
-//                    int temp_relative_cost=Integer.MAX_VALUE; //Temporary variable to determine which mode of travel (Flight / Train) is cheaper between 2 cities
-////                    String mode_travel;
-////                    String city_travel;
-//                    Hop optimal_hop=null;
-//
-//                    for(Hop h : Hops) //Between any 2 Cities there may be a maximum of two modes of transport. Determine the cheapest mode of transport between two Cities
-//                    {
-//                        if(h.getStart()==nearest_city && h.getDestination()==neighbour_city)
-//                        {
-//                            //Vaccinated OR (Unvaccinated BUT a test isn't required)
-//                            if(vacc_status || (!vacc_status && !(neighbour_city.getTestRequired())))
-//                            {
-//                                temp_relative_cost = ((costImportance * h.getCost()) + (travelTimeImportance * h.getTime()) + (travelHopImportance * travel_hops.get(neighbour_city)));
-//                            }
-//                            //Unvaccinated & Testing CAN be performed in the City
-//                            else if(!vacc_status && neighbour_city.getTestRequired() && (neighbour_city.getTimeToTest()<0))
-//                            {
-//                                int total_cost=((neighbour_city.getTimeToTest()*neighbour_city.getHotelCost()) + h.getCost()); /* If an individual is unvaccinated
-//                                 total cost incurred = Cost_for_Testing + Cost_to_Travel*/
-//                                temp_relative_cost = ((costImportance * total_cost) + (travelTimeImportance * h.getTime()) + (travelHopImportance * travel_hops.get(neighbour_city)));
-//                                vacc_status=true;
-//                            }
-//
-//                            if(temp_relative_cost<mode_relative_cost) //If one mode is cheaper than another mode, set that mode as the edge between the two cities
-//                            {
-//                                mode_relative_cost=temp_relative_cost;
-////                                mode_travel=h.getMode(); //Retrieve the Optimal mode of transport
-////                                city_travel=neighbour_city.getCity(); //Retrieve the City name for the output
-//                                optimal_hop=h; //Retrieve the Optimal mode of transport between two cities
-//                            }
-//                        }
-//                    }
-//
-//                    //updated_cost=rel_cost.get(nearest_city)+mode_relative_cost;
-//
-//                    updated_cost=nearest_city.getCostFromSource()+mode_relative_cost;/* Update the cost to the neighbour city
-//                     as the sum of the distance from the source to the nearest_city and the distance from the nearest_city to the neighbour city*/
-//
-//                    //if(updated_cost<rel_cost.get(neighbour_city))
-//                    if(updated_cost<neighbour_city.getCostFromSource()) //If the new cost is lesser than the existing cost for the City, replace the cost in the Map
-//                    {
-//                        //rel_cost.put(neighbour_city,updated_cost);
-//                        neighbour_city.setCostFromSource(updated_cost);
-//                        travel_path.put(neighbour_city,optimal_hop);
-//                    }
-//                    queue.add(neighbour_city);
-//                }
-//            }
-//        }
-//
-//        if(destination_city.getCostFromSource()==Integer.MAX_VALUE) //If there's no way to travel between the given cities then return null as the list
-//        {
-//            return null;
-//        }
-//
-//        output.add("start " + startCity);
-//        City temp_city=destination_city;
-//        while(temp_city!=start_city)
-//        {
-//            Hop path_edge=travel_path.get(temp_city);//Retrieve the hop between two Cities
-//            output.add(0,path_edge.getMode() + " " + path_edge.getDestination().getCity()); //Store the Mode of transport and the destination
-//            temp_city=path_edge.getStart();
-//        }
-//        return output;
-//    }
+    List<String> planTrip ( String startCity, String destinationCity, boolean isVaccinated, int costImportance, int travelTimeImportance, int travelHopImportance ) throws
+            IllegalArgumentException {
+        boolean startflag = false;
+        boolean endflag = false;
+        City start_city = new City();//Retrieve objects from the List of Cities where City Name is a match.
+        City destination_city = new City();
+        for (City c : Cities) {
+            if (Objects.equals(c.getCity(), startCity))
+            {
+                startflag = true;
+                start_city=c;
+            }
+
+            if (Objects.equals(c.getCity(), destinationCity))
+            {
+                endflag = true;
+                destination_city=c;
+            }
+        }
+
+        if(startflag && endflag)
+        {
+        List<String> output = new ArrayList<String>(); //Output List of Strings which contains the Cities visited and the mode of Travel
+
+
+
+        HashSet<String> visited_nodes = new HashSet<>(); //Initialize a Set of Visited Nodes for Dijkstra's algorithm
+        PriorityQueue<City> queue = new PriorityQueue<City>(new MyComparator()); //Initialize a Priority Queue for Dijkstra's algorithm
+
+        HashMap<String, Hop> travel_path = new HashMap<>(); //A Map to store the cost of travel from the source City to every other City in the Travel Assistant
+        HashMap<String, Integer> travel_hops = new HashMap<>(); //A Map to store the number of Hops from the source City to every other City in the Travel Assistant
+        HashMap<String, Integer> rel_cost = new HashMap<>(); //A Map to store the cost of travel from the source City to every other City in the Travel Assistant
+
+        for (City c : Cities) {
+            rel_cost.put(c.getCity(),Integer.MAX_VALUE);
+            c.setCostFromSource(Integer.MAX_VALUE);/*Assigning the cost of travel to each City as INFINITY.
+            To simulate infinity, I have assigned the maximum value an integer can take*/
+        }
+
+        rel_cost.put(start_city.getCity(),0); //Set the relative cost of visiting a "Start City" as 0.
+        start_city.setCostFromSource(0);
+
+        travel_hops.put(start_city.getCity(), 0); //Set the number of travel_hops to visit a "Start City" as 0.
+        queue.add(start_city); //Add the City to the Priority queue
+
+        while (visited_nodes.size() != Cities.size()) //Traverse the Graph till all Nodes are visited
+        {
+            City nearest_city = queue.remove(); //Retrieve the city that is closest to the current city
+            visited_nodes.add(nearest_city.getCity()); //Add it to the list of processed Cities
+            int updated_cost;
+
+            //int j=0;j<travel_graph.adjVertices.get(nearest_city).size();j++
+            for (String neighbour_city : travel_graph.adjVertices.get(nearest_city.getCity())) //For all Cities that are connected to the current City that was processed
+            {
+                boolean vax_flag=false;
+                boolean vacc_status = isVaccinated; /*Store the Vaccination status
+         so that if an unvaccinated traveller gets tested in a City, we can change the status to "Vaccinated"*/
+                City nc = new City();
+                //City neighbour_city=cy; //Retrieve a neighbour city that's CONNECTED to the processed city
+                for (City C : Cities) {
+                    if (Objects.equals(C.getCity(), neighbour_city)) {
+                        nc = C;
+                    }
+                }
+                if (!vacc_status && (nc.getTimeToTest() < 0) && (nc.getTestRequired())) //Unvaccinated & a Test is required but Testing CANNOT be performed in the City
+                {
+                    continue;
+                }
+
+                if (!visited_nodes.contains(neighbour_city)) //Check if the neighbour city has already been processed
+                {
+                    travel_hops.put(neighbour_city, travel_hops.get(nearest_city.getCity()) + 1); //#travel_hops(source to current node) = #travel_hops from source to previous node + #travel_hops from previous to current node
+
+                    int mode_relative_cost = Integer.MAX_VALUE;
+                    int temp_relative_cost = Integer.MAX_VALUE; //Temporary variable to determine which mode of travel (Flight / Train) is cheaper between 2 cities
+//                    String mode_travel;
+//                    String city_travel;
+                    Hop optimal_hop = null;
+
+                    for (Hop h : Hops) //Between any 2 Cities there may be a maximum of two modes of transport. Determine the cheapest mode of transport between two Cities
+                    {
+                        if (Objects.equals(h.getStart(), nearest_city.getCity()) && Objects.equals(h.getDestination(), nc.getCity())) {
+                            //Vaccinated OR (Unvaccinated BUT a test isn't required)
+                            if (vacc_status || (!vacc_status && !(nc.getTestRequired()))) {
+                                temp_relative_cost = ((costImportance * h.getCost()) + (travelTimeImportance * h.getTime()) + (travelHopImportance * travel_hops.get(neighbour_city)));
+                            }
+                            //Unvaccinated & Testing CAN be performed in the City
+                            else if (!vacc_status && nc.getTestRequired() && (nc.getTimeToTest() < 0)) {
+                                int total_cost = ((nc.getTimeToTest() * nc.getHotelCost()) + h.getCost()); /* If an individual is unvaccinated
+                                 total cost incurred = Cost_for_Testing + Cost_to_Travel*/
+                                temp_relative_cost = ((costImportance * total_cost) + (travelTimeImportance * h.getTime()) + (travelHopImportance * travel_hops.get(neighbour_city)));
+                                vax_flag = true;
+                            }
+
+                            if (temp_relative_cost < mode_relative_cost) //If one mode is cheaper than another mode, set that mode as the edge between the two cities
+                            {
+                                mode_relative_cost = temp_relative_cost;
+                                optimal_hop = h; //Retrieve the Optimal mode of transport between two cities
+                            }
+                        }
+                    }
+
+
+
+                    updated_cost=rel_cost.get(nearest_city.getCity())+mode_relative_cost;
+
+                    //updated_cost = nearest_city.getCostFromSource() + mode_relative_cost;
+                    /* Update the cost to the neighbour city
+                     as the sum of the distance from the source to the nearest_city and the distance from the nearest_city to the neighbour city*/
+
+                    //if(updated_cost<rel_cost.get(neighbour_city))
+                    if (updated_cost < nc.getCostFromSource()) //If the new cost is lesser than the existing cost for the City, replace the cost in the Map
+                    {
+                        rel_cost.put(neighbour_city,updated_cost);
+                        nc.setCostFromSource(updated_cost);
+                        travel_path.put(neighbour_city, optimal_hop);
+                        if(!vacc_status && vax_flag)
+                        {
+                            vacc_status=true;
+                        }
+                    }
+                    queue.add(nc);
+                }
+            }
+        }
+
+        System.out.println("Relative Cost: " + rel_cost.toString());
+        if (rel_cost.get(destinationCity) == Integer.MAX_VALUE) //If there's no way to travel between the given cities then return null as the list
+        {
+            System.out.println("Destination COST is infinity");
+            return null;
+        }
+
+        String temp_city = destinationCity;
+        while (!Objects.equals(temp_city, start_city.getCity())) {
+            Hop path_edge = travel_path.get(temp_city);//Retrieve the hop between two Cities
+            output.add(0, path_edge.getMode() + " " + path_edge.getDestination()); //Store the Mode of transport and the destination
+            temp_city = path_edge.getStart();
+        }
+        output.add(0,"start " + startCity);
+        return output;
+    }
+        else
+        {
+            System.out.println("Cities do not exist");
+            return null;
+        }
+    }
 
 } // End of Class - Travel Assistant
+
+class MyComparator implements Comparator<City> //A comparison function which compares the frequency of characters stored in "Tree" nodes.
+{
+    public int compare(City x,City y)
+    {
+        return x.getCostFromSource()-y.getCostFromSource();
+    }
+    }
 
 //while(neighbour!=start_city)
 //        {

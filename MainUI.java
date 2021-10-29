@@ -124,32 +124,36 @@ public class MainUI
                 }
             }
 
-//            else if (userCommand.equalsIgnoreCase(planTripCommand)) //If user wants to plan a trip from start_city to dest_city
-//            {
-//                String start_city=scnr.next();
-//                String dest_city= scnr.next();
-//                boolean vacc_status=scnr.nextBoolean();//Vaccination status of the traveller
-//                int cost_imp=scnr.nextInt(); //User's priority value for cost
-//                int time_imp=scnr.nextInt();//User's priority value for Travel Time
-//                int hop_imp=scnr.nextInt();//User's priority value for Number of hops
-//
-//                //TravelAssistant TA = new TravelAssistant();
-//
-//                try
-//                {
-//                    List<String> itinerary = TA.planTrip(start_city, dest_city, vacc_status, cost_imp, time_imp,hop_imp);
-//
-//                    for(String str:itinerary) //Print the Mode of Travel and City visited in the itinerary
-//                    {
-//                        System.out.println(str);
-//                    }
-//
-//                }
-//                catch (IllegalArgumentException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//            }
+            else if (userCommand.equalsIgnoreCase(planTripCommand)) //If user wants to plan a trip from start_city to dest_city
+            {
+                String start_city=scnr.next();
+                String dest_city= scnr.next();
+                boolean vacc_status=scnr.nextBoolean();//Vaccination status of the traveller
+                int cost_imp=scnr.nextInt(); //User's priority value for cost
+                int time_imp=scnr.nextInt();//User's priority value for Travel Time
+                int hop_imp=scnr.nextInt();//User's priority value for Number of hops
+
+                //TravelAssistant TA = new TravelAssistant();
+
+                try
+                {
+                    if(start_city==null || start_city.isEmpty() || dest_city==null || dest_city.isEmpty() || (cost_imp<0)|| (time_imp<0) || (hop_imp<0)) //Check for Invalid Input
+                    {
+                        throw new IllegalArgumentException("Invalid parameters are entered for this Trip!");
+                    } //Throw an Exception if any Illegal Arguments are entered
+                    List<String> itinerary = TA.planTrip(start_city, dest_city, vacc_status, cost_imp, time_imp,hop_imp);
+
+                    for(String str:itinerary) //Print the Mode of Travel and City visited in the itinerary
+                    {
+                        System.out.println(str);
+                    }
+
+                }
+                catch (IllegalArgumentException e)
+                {
+                    e.printStackTrace();
+                }
+            }
 
             else if (userCommand.equalsIgnoreCase("quit"))
             {
